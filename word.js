@@ -1,3 +1,4 @@
+var pos = require('pos');
 
 class Word {
   constructor(word, article) {
@@ -24,46 +25,23 @@ class Words {
   }
 
   getWords(target_sentance) {
-    const WHITESPACE = 0;
-    const WORD = 1;
-    const WORD_END = 2;
 
-    var flag = WHITESPACE;
-    var words = [];
-    var aWord = "";
+    var output = [];
+    var words = new pos.Lexer().lex(target_sentance);
+    var tagger = new pos.Tagger();
+    var taggedWords = tagger.tag(words);
 
-    // 마지막 단어를 검사하기 위해 공백을 추가해줌.
-    target_sentance = target_sentance.concat(' ');
-    for (var i = 0; i < target_sentance.length; i++) {
-      var char = target_sentance.charAt(i);
+    for (var i in taggedWords) {
+        var taggedWord = taggedWords[i];
+        var word = taggedWord[0];
+        var tag = taggedWord[1];
 
-      // 문자와 숫자인 확인한 후 경우에 맞는 flag를 설정
-      if (('a' <= char && char <= 'z') || ('0' <= char && char <= '9')) {
-        flag = WORD;
-      } else {
-        if (flag == WORD) flag = WORD_END;
-        else flag = WHITESPACE;
-      }
-
-      // flag에 따른 작업.
-      switch (flag) {
-        case WHITESPACE:
-          break;
-        case WORD :
-          aWord = aWord.concat(char);
-          break;
-        case WORD_END :
-          if (aWord.length < 3 || this.dict.has(aWord)) {
-            break;
-          }
-          words.push(aWord);
-          aWord = "";
-          break;
-        default:
-      }
+        if (tag == "NN" || tag == "NNP" || tag == "NNPS" || tag == "NNS") {
+          output.push(word);
+        }
     }
 
-    return words;
+    return output;
   }
 
   parseArticle(article) {

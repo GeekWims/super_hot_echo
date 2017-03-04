@@ -7,8 +7,6 @@ const Dictionary = require('./dictionary');
 const hostname = '127.0.0.1';
 const port = 3000;
 
-const dict = new Dictionary.Dictionary("dic.txt");
-
 const server = http.createServer((req, res) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
