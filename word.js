@@ -34,7 +34,7 @@ class Words {
         var word = taggedWord[0];
         var tag = taggedWord[1];
 
-        if (tag == "NN" || tag == "NNP" || tag == "NNPS" || tag == "NNS") {
+        if (tag == "NN" || tag == "NNP" || tag == "NNPS") {
           output.push(word);
         }
     }
@@ -43,7 +43,7 @@ class Words {
   }
 
   parseArticle(article) {
-    var sentance = article.description.trim();
+    var sentance = article.title.trim().replace(/(<([^>]+)>)/gi, "");;
     var words = this.getWords(sentance);
 
     for (var i in words) {
