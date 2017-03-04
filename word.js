@@ -1,3 +1,6 @@
+
+"use strict";
+
 var pos = require('pos');
 
 class Word {
@@ -17,11 +20,6 @@ class Word {
 class Words {
   constructor() {
     this.list = new Map();
-    this.dict = [];
-  }
-
-  setDict(dict) {
-    this.dict = dict;
   }
 
   getWords(target_sentance) {

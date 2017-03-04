@@ -1,3 +1,6 @@
+
+"use strict";
+
 const http = require('http');
 const request = require('request');
 const Article = require('./article');
