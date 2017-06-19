@@ -7,13 +7,23 @@ class Word {
   constructor(word, article) {
     this.count = 1;
     this.word = word;
-    this.articles = [];
-    this.articles.push(article);
+    this.titles = [];
+    this.titles.push(article.title);
   }
 
   addArticle(article) {
-    this.articles.push(article);
+    this.titles.push(article.title);
     this.count++;
+  }
+
+  toAlexResponseString() {
+      var output = "Articles about " + this.word + "<break time='400ms'/>";
+
+      for (var i in this.titles) {
+        output += (parseInt(i) + 1) + ". " + this.titles[i] + "<break time='400ms'/>";
+      }
+
+      return output;
   }
 }
 
@@ -70,7 +80,7 @@ class Words {
       return b.count - a.count;
     });
 
-    return tmpArr.slice(0, number - 1);
+    return tmpArr.slice(0, number);
   }
 }
 
